@@ -4,6 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
-  m_configObjects: {}
+  m_Scenes:
+  - enabled: 1
+    path: Assets/NGO_Minimal_Setup/NGO_Setup.unity
+    guid: e5ca1de1c1f9d4c4191a95766f9b207c
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 61944c8b91c2b314795aec6bab1db1a3, type: 3}
   m_UseUCBPForAssetBundles: 0
