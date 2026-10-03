@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6577494410853303717}
   - component: {fileID: 8976406371601941864}
-  - component: {fileID: 6224707067735562013}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -84,14 +83,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &6224707067735562013
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3144375367767252940}
-  m_Enabled: 1
 --- !u!1 &5261606472739335484
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,6 +187,7 @@ GameObject:
   - component: {fileID: 3695904584550190632}
   - component: {fileID: 1183042417289381662}
   - component: {fileID: 2019594230060674214}
+  - component: {fileID: 1077151944995126717}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -289,7 +281,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8748084129144861454}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd79cef4815eb4b4a8b7360b5e44cbb8, type: 3}
   m_Name: 
@@ -309,3 +301,30 @@ MonoBehaviour:
   lookAngle: 0
   LookSensitivity: 0.2
   LookAngleLimit: 90
+--- !u!114 &1077151944995126717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748084129144861454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3050119167
+  InScenePlacedSourceGlobalObjectIdHash: 3551820220
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 0
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
