@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private float WalkSpeed = 5.5f;
     [SerializeField] private float RunSpeed = 9.0f;
@@ -29,6 +30,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(IsOwner == false)
+        {
+            return;
+        }
+
         Vector2 moveVector = moveInput.ReadValue<Vector2>();
         HandleMovement(moveVector);
     } 

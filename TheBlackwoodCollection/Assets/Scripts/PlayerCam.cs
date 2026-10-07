@@ -1,26 +1,39 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class PlayerCam : MonoBehaviour
+using Unity.Netcode;
+public class PlayerCam : NetworkBehaviour
 {
     private Camera mainCamera;
     private CharacterController player;
+    private AudioListener audioListener;
 
     [SerializeField] private float lookAngle = 0.0f;
     [SerializeField] private float LookSensitivity = 0.2f;
     [SerializeField] private float LookAngleLimit = 90f;
 
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
+
         mainCamera = GetComponentInChildren<Camera>();
-        //player = GetComponent<CharacterController>();
+        audioListener = GetComponentInChildren<AudioListener>();
+
+        audioListener.enabled = IsOwner;
+        mainCamera.enabled = IsOwner;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-        HandleLooking(mouseDelta);
+
+            if (IsOwner && mainCamera != null) {
+            
+                Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+                HandleLooking(mouseDelta);
+            }
     }
 
     private void HandleLooking(Vector2 mouseDelta) // Camera Movement
