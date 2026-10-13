@@ -16,5 +16,5 @@ MonoBehaviour:
   itemName: Cylinder
   description: a lil cyclinder
   worldPrefab: {fileID: 1712682378403055341, guid: 976f2e3806d1a1446a1d00ac97e86110, type: 3}
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   maxStack: 1

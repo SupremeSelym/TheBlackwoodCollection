@@ -1,4 +1,5 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
 [Serializable]
@@ -11,13 +12,13 @@ public struct InventorySlot
     public static InventorySlot Empty => new InventorySlot { itemId = -1, quantity = 0 };
 }
 
-public class Inventory : MonoBehaviour
+public class Inventory : NetworkBehaviour
 {
     public ItemDatabase database;
     public int slotCount = 20;
     public InventorySlot[] slots;
 
-    // UI (and later, networking) listens to this
+    // UI listens to this
     public event Action OnChanged;
 
     private void Awake()
@@ -27,9 +28,17 @@ public class Inventory : MonoBehaviour
             slots[i] = InventorySlot.Empty;
     }
 
+    // ---------- SERVER-ONLY CHANGES ----------
+
     /// Returns how many items did NOT fit (0 = everything was added).
     public int AddItem(int itemId, int amount)
     {
+        if (!IsServer)
+        {
+            Debug.LogWarning("Inventory.AddItem can only run on the server.");
+            return amount;
+        }
+
         ItemData data = database.GetItem(itemId);
         if (data == null || amount <= 0) return amount;
 
@@ -55,27 +64,32 @@ public class Inventory : MonoBehaviour
             amount -= toAdd;
         }
 
-        OnChanged?.Invoke();
+        NotifyChanged();
         return amount;
     }
 
     public void RemoveFromSlot(int index, int amount)
     {
+        if (!IsServer) return;
         if (index < 0 || index >= slots.Length || slots[index].IsEmpty) return;
 
         slots[index].quantity -= amount;
         if (slots[index].quantity <= 0)
             slots[index] = InventorySlot.Empty;
 
-        OnChanged?.Invoke();
+        NotifyChanged();
     }
 
     public void SwapSlots(int a, int b)
     {
+        if (!IsServer) return;
         if (a < 0 || b < 0 || a >= slots.Length || b >= slots.Length) return;
+
         (slots[a], slots[b]) = (slots[b], slots[a]);
-        OnChanged?.Invoke();
+        NotifyChanged();
     }
+
+    // ---------- READ-ONLY HELPERS (safe anywhere) ----------
 
     public int CountItem(int itemId)
     {
@@ -85,11 +99,47 @@ public class Inventory : MonoBehaviour
         return total;
     }
 
-    /// Returns the index of the first slot that has something in it, or -1 if the inventory is empty.
     public int FindFirstFilledSlot()
     {
         for (int i = 0; i < slots.Length; i++)
             if (!slots[i].IsEmpty) return i;
         return -1;
+    }
+
+    // ---------- SYNC TO THE OWNING PLAYER ----------
+
+    private void NotifyChanged()
+    {
+        OnChanged?.Invoke();
+
+        // The host's own player already has the real data. A client-owned
+        // player needs a copy sent to its owner.
+        if (!IsServer || IsOwner) return;
+
+        int[] ids = new int[slots.Length];
+        int[] qtys = new int[slots.Length];
+        for (int i = 0; i < slots.Length; i++)
+        {
+            ids[i] = slots[i].itemId;
+            qtys[i] = slots[i].quantity;
+        }
+
+        var target = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams { TargetClientIds = new ulong[] { OwnerClientId } }
+        };
+        SyncClientRpc(ids, qtys, target);
+    }
+
+    [ClientRpc]
+    private void SyncClientRpc(int[] ids, int[] qtys, ClientRpcParams rpcParams = default)
+    {
+        if (IsServer) return; // the server already has the truth
+
+        int count = Mathf.Min(slots.Length, ids.Length);
+        for (int i = 0; i < count; i++)
+            slots[i] = new InventorySlot { itemId = ids[i], quantity = qtys[i] };
+
+        OnChanged?.Invoke();
     }
 }

@@ -7,8 +7,20 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\PlayerInteract.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\Inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\Inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemPickup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemPickup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\SlotUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\SlotUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\InventoryUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\InventoryUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -22,8 +34,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Inventory.cs",
+              "DocumentMoniker": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\Inventory.cs",
+              "RelativeDocumentMoniker": "TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\Inventory.cs",
+              "ToolTip": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\Inventory.cs",
+              "RelativeToolTip": "TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\Inventory.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAswJAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-13T14:26:41.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "InventoryUI.cs",
+              "DocumentMoniker": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\InventoryUI.cs",
+              "RelativeDocumentMoniker": "TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\InventoryUI.cs",
+              "ToolTip": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\InventoryUI.cs",
+              "RelativeToolTip": "TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\InventoryUI.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-13T13:36:49.434Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SlotUI.cs",
+              "DocumentMoniker": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\SlotUI.cs",
+              "RelativeDocumentMoniker": "TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\SlotUI.cs",
+              "ToolTip": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\SlotUI.cs",
+              "RelativeToolTip": "TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\SlotUI.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-13T13:35:21.612Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,27 +83,27 @@
               "RelativeDocumentMoniker": "TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\PlayerInteract.cs",
               "ToolTip": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\PlayerInteract.cs",
               "RelativeToolTip": "TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\PlayerInteract.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAswIEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-13T13:07:03.261Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ItemPickup.cs",
               "DocumentMoniker": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemPickup.cs",
               "RelativeDocumentMoniker": "TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemPickup.cs",
               "ToolTip": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemPickup.cs",
               "RelativeToolTip": "TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemPickup.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-13T13:06:31.961Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "ItemData.cs",
               "DocumentMoniker": "C:\\Projects\\TheBlackwoodCollection\\TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemData.cs",
               "RelativeDocumentMoniker": "TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemData.cs",
@@ -60,8 +111,7 @@
               "RelativeToolTip": "TheBlackwoodCollection\\Assets\\Scripts\\Inventory Scripts\\ItemData.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-13T13:05:35.447Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-13T13:05:35.447Z"
             }
           ]
         }

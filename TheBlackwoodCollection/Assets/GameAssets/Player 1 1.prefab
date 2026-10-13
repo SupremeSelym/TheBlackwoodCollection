@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   database: {fileID: 11400000, guid: 1ba86240c07f3e44dad9717c95e75e3e, type: 2}
-  slotCount: 2
+  slotCount: 4
   slots: []
 --- !u!114 &2073246381404281216
 MonoBehaviour:

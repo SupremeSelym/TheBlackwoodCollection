@@ -16,5 +16,5 @@ MonoBehaviour:
   itemName: Cube
   description: A lil old cube
   worldPrefab: {fileID: 9079367518114355836, guid: 260a06b222d233546b05674325de4f0b, type: 3}
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   maxStack: 1

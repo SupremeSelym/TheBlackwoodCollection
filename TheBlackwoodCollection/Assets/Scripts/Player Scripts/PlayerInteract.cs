@@ -33,12 +33,15 @@ public class PlayerInteract : NetworkBehaviour
         if (!IsOwner) return;
 
         Keyboard kb = Keyboard.current;
-        if (kb == null) return; // no keyboard connected
+        if (kb == null) return;
 
         if (kb[pickupKey].wasPressedThisFrame) TryPickup();
-        if (kb[dropKey].wasPressedThisFrame) TryDrop();
+        if (kb[dropKey].wasPressedThisFrame) DropServerRpc();
     }
 
+    // ---------- PICKUP ----------
+
+    // Runs on the player's own machine: find the nearest pickup, then ask the server.
     private void TryPickup()
     {
         Collider[] hits = Physics.OverlapSphere(
@@ -60,11 +63,40 @@ public class PlayerInteract : NetworkBehaviour
             }
         }
 
-        if (closest != null)
-            closest.TryPickUp(inventory);
+        if (closest == null) return;
+
+        NetworkObject netObj = closest.GetComponent<NetworkObject>();
+        if (netObj == null || !netObj.IsSpawned)
+        {
+            Debug.LogWarning("That pickup isn't a spawned NetworkObject, so it can't be synced.", closest);
+            return;
+        }
+
+        PickupServerRpc(netObj);
     }
 
-    private void TryDrop()
+    // Runs on the server.
+    [ServerRpc]
+    private void PickupServerRpc(NetworkObjectReference pickupRef)
+    {
+        // If another player grabbed it first, this fails and we just stop
+        if (!pickupRef.TryGet(out NetworkObject netObj)) return;
+
+        ItemPickup pickup = netObj.GetComponent<ItemPickup>();
+        if (pickup == null) return;
+
+        // Anti-cheat / lag tolerance: make sure the player is actually near it
+        float dist = Vector3.Distance(transform.position, pickup.transform.position);
+        if (dist > pickupRange + 2f) return;
+
+        pickup.TryPickUp(inventory);
+    }
+
+    // ---------- DROP ----------
+
+    // Runs on the server.
+    [ServerRpc]
+    private void DropServerRpc()
     {
         int index = inventory.FindFirstFilledSlot();
         if (index < 0) return; // nothing to drop
@@ -73,7 +105,6 @@ public class PlayerInteract : NetworkBehaviour
         ItemData data = inventory.database.GetItem(slot.itemId);
         if (data == null) return;
 
-        // Use the item's own world prefab, or fall back to the default one
         ItemPickup prefabToSpawn = data.worldPrefab != null ? data.worldPrefab : pickupPrefab;
         if (prefabToSpawn == null)
         {
@@ -92,5 +123,8 @@ public class PlayerInteract : NetworkBehaviour
         ItemPickup dropped = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
         dropped.item = data;
         dropped.quantity = amount;
+
+        // This is what makes it exist for every player
+        dropped.GetComponent<NetworkObject>().Spawn();
     }
 }
