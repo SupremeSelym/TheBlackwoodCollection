@@ -38,4 +38,9 @@ public class ArtifactBase : MonoBehaviour
     {
 
     }
+
+    public bool GetContainmentStatus()
+    {
+        return Contained;
+    }
 }
