@@ -7,23 +7,25 @@ public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private float WalkSpeed = 5.5f;
     [SerializeField] private float RunSpeed = 9.0f;
-    
-
+    [SerializeField] private float currentMoveSpeed = 0f;
+    [SerializeField] private Light flashlight;
+//SerializeField] private GameObject flashlight;
     private CharacterController characterController;
 
     private InputAction moveInput;
     private InputAction sprintInput;
+    private InputAction toggleFlash;
 
-    private float currentMoveSpeed = 0f;
+    //private float currentMoveSpeed = 0f;
     private Vector3 moveDirection = Vector3.zero;
-    //private float lookAngle = 0.0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         moveInput = InputSystem.actions.FindAction("Move");
         sprintInput = InputSystem.actions.FindAction("Sprint");
-
+        toggleFlash = InputSystem.actions.FindAction("Flashlight");
+        flashlight.enabled=false;
         currentMoveSpeed = WalkSpeed;
     }
 
@@ -37,6 +39,8 @@ public class PlayerMovement : NetworkBehaviour
 
         Vector2 moveVector = moveInput.ReadValue<Vector2>();
         HandleMovement(moveVector);
+        StartSprint();
+        toggleFlashlight();
     } 
 
     private void HandleMovement(Vector2 moveVector)
@@ -52,5 +56,28 @@ public class PlayerMovement : NetworkBehaviour
         moveDirection.y = oldY;
 
         characterController.Move(moveDirection * Time.deltaTime);
+    }
+    private void StartSprint()
+    {
+        if (sprintInput.IsPressed())
+        {
+            currentMoveSpeed = RunSpeed;
+        }
+        else if(!sprintInput.IsPressed())
+        {
+            currentMoveSpeed = WalkSpeed;
+        }
+    }
+    private void toggleFlashlight()
+    {
+        if (toggleFlash.IsPressed())
+        {
+            flashlight.enabled = true;
+            Debug.Log("Flashlight on");
+        }
+        else
+        {
+            flashlight.enabled = false;
+        }
     }
 }
