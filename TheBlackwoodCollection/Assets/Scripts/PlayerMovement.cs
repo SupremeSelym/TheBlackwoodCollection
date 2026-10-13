@@ -30,10 +30,8 @@ public class PlayerMovement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(IsOwner == false)
-        {
-            return;
-        }
+        if(!IsOwner) return;
+        if(PauseMenu.GameIsPaused) return;
 
         Vector2 moveVector = moveInput.ReadValue<Vector2>();
         HandleMovement(moveVector);
