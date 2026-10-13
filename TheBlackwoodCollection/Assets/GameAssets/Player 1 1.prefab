@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 2137897642698502505}
   - component: {fileID: 917456941777774071}
   - component: {fileID: 16189731921856046}
+  - component: {fileID: 3107738328362185918}
+  - component: {fileID: 2073246381404281216}
   m_Layer: 0
   m_Name: Player 1 1
   m_TagString: Player
@@ -101,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1927496500
+  GlobalObjectIdHash: 917354123
   InScenePlacedSourceGlobalObjectIdHash: 3551820220
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -205,6 +207,42 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &3107738328362185918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246547747595982557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81ae2c471489db64ab291c25e3bd520c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Inventory
+  database: {fileID: 11400000, guid: 1ba86240c07f3e44dad9717c95e75e3e, type: 2}
+  slotCount: 2
+  slots: []
+--- !u!114 &2073246381404281216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246547747595982557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d842ceef4158640863fe0c8943e04c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
+  ShowTopMostFoldoutHeaderGroup: 1
+  pickupKey: 19
+  dropKey: 31
+  pickupRange: 2
+  pickupPrefab: {fileID: 9079367518114355836, guid: 260a06b222d233546b05674325de4f0b, type: 3}
+  dropDistance: 1.5
+  dropHeightOffset: 0.5
+  dropAmount: 34
+  dropWholeStack: 0
 --- !u!1 &4161977058381936602
 GameObject:
   m_ObjectHideFlags: 0
