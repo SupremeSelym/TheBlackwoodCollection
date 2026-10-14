@@ -19,14 +19,20 @@ public class ArtifactBase : MonoBehaviour
 
     private void OnFailContainment()
     {
-        Contained = false;
-        BreachEffect();
+        if (Contained)
+        {
+            Contained = false;
+            BreachEffect();
+        }
     }
 
     private void OnRestoreContainment()
     {
-        Contained = true;
-        EndBreachEffect();
+        if (!Contained)
+        {
+            Contained = true;
+            EndBreachEffect();
+        }
     }
 
     public void BreachEffect()
