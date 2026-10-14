@@ -165,3 +165,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotUI
   icon: {fileID: 7556315016007642114}
+  background: {fileID: 0}
+  selectedColor: {r: 1, g: 0.85, b: 0.2, a: 1}

@@ -22,6 +22,12 @@ public class PlayerInteract : NetworkBehaviour
 
     private Inventory inventory;
 
+    private static readonly Key[] numberKeys =
+    {
+        Key.Digit1, Key.Digit2, Key.Digit3, Key.Digit4, Key.Digit5,
+        Key.Digit6, Key.Digit7, Key.Digit8, Key.Digit9, Key.Digit0
+    };
+
     private void Awake()
     {
         inventory = GetComponent<Inventory>();
@@ -29,19 +35,40 @@ public class PlayerInteract : NetworkBehaviour
 
     private void Update()
     {
-        // Only the player who owns this character reads input.
         if (!IsOwner) return;
 
         Keyboard kb = Keyboard.current;
         if (kb == null) return;
 
+        HandleSelection(kb);
+
         if (kb[pickupKey].wasPressedThisFrame) TryPickup();
-        if (kb[dropKey].wasPressedThisFrame) DropServerRpc();
+        if (kb[dropKey].wasPressedThisFrame) DropServerRpc(inventory.selectedSlot);
+    }
+
+    private void HandleSelection(Keyboard kb)
+    {
+        for (int i = 0; i < numberKeys.Length; i++)
+            if (kb[numberKeys[i]].wasPressedThisFrame)
+                inventory.SelectSlot(i);
+
+        Mouse mouse = Mouse.current;
+        if (mouse != null)
+        {
+            float scroll = mouse.scroll.ReadValue().y;
+            if (scroll > 0.1f) CycleSelection(-1);
+            else if (scroll < -0.1f) CycleSelection(1);
+        }
+    }
+
+    private void CycleSelection(int direction)
+    {
+        int count = inventory.slots.Length;
+        inventory.SelectSlot((inventory.selectedSlot + direction + count) % count);
     }
 
     // ---------- PICKUP ----------
 
-    // Runs on the player's own machine: find the nearest pickup, then ask the server.
     private void TryPickup()
     {
         Collider[] hits = Physics.OverlapSphere(
@@ -75,17 +102,14 @@ public class PlayerInteract : NetworkBehaviour
         PickupServerRpc(netObj);
     }
 
-    // Runs on the server.
     [ServerRpc]
     private void PickupServerRpc(NetworkObjectReference pickupRef)
     {
-        // If another player grabbed it first, this fails and we just stop
         if (!pickupRef.TryGet(out NetworkObject netObj)) return;
 
         ItemPickup pickup = netObj.GetComponent<ItemPickup>();
         if (pickup == null) return;
 
-        // Anti-cheat / lag tolerance: make sure the player is actually near it
         float dist = Vector3.Distance(transform.position, pickup.transform.position);
         if (dist > pickupRange + 2f) return;
 
@@ -94,14 +118,14 @@ public class PlayerInteract : NetworkBehaviour
 
     // ---------- DROP ----------
 
-    // Runs on the server.
     [ServerRpc]
-    private void DropServerRpc()
+    private void DropServerRpc(int slotIndex)
     {
-        int index = inventory.FindFirstFilledSlot();
-        if (index < 0) return; // nothing to drop
+        if (slotIndex < 0 || slotIndex >= inventory.slots.Length) return;
 
-        InventorySlot slot = inventory.slots[index];
+        InventorySlot slot = inventory.slots[slotIndex];
+        if (slot.IsEmpty) return;
+
         ItemData data = inventory.database.GetItem(slot.itemId);
         if (data == null) return;
 
@@ -114,7 +138,7 @@ public class PlayerInteract : NetworkBehaviour
 
         int amount = dropWholeStack ? slot.quantity : Mathf.Min(dropAmount, slot.quantity);
 
-        inventory.RemoveFromSlot(index, amount);
+        inventory.RemoveFromSlot(slotIndex, amount);
 
         Vector3 spawnPos = transform.position
                          + transform.forward * dropDistance
@@ -124,7 +148,6 @@ public class PlayerInteract : NetworkBehaviour
         dropped.item = data;
         dropped.quantity = amount;
 
-        // This is what makes it exist for every player
         dropped.GetComponent<NetworkObject>().Spawn();
     }
 }

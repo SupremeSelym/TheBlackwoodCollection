@@ -15,12 +15,11 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        panel.SetActive(false);
+        panel.SetActive(true);
     }
 
     private void Update()
     {
-        // Keep looking for the local player until we find it
         if (inventory == null) TryFindLocalPlayer();
 
         Keyboard kb = Keyboard.current;
@@ -42,12 +41,16 @@ public class InventoryUI : MonoBehaviour
 
     public void Bind(Inventory newInventory)
     {
-        if (inventory != null) inventory.OnChanged -= Refresh;
+        if (inventory != null)
+        {
+            inventory.OnChanged -= Refresh;
+            inventory.OnSelectionChanged -= RefreshSelection;
+        }
 
         inventory = newInventory;
         inventory.OnChanged += Refresh;
+        inventory.OnSelectionChanged += RefreshSelection;
 
-        // Build one visual slot per inventory slot
         foreach (Transform child in slotContainer) Destroy(child.gameObject);
         slotUIs.Clear();
 
@@ -59,7 +62,11 @@ public class InventoryUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (inventory != null) inventory.OnChanged -= Refresh;
+        if (inventory != null)
+        {
+            inventory.OnChanged -= Refresh;
+            inventory.OnSelectionChanged -= RefreshSelection;
+        }
     }
 
     private void Refresh()
@@ -69,7 +76,13 @@ public class InventoryUI : MonoBehaviour
             InventorySlot s = inventory.slots[i];
             ItemData data = s.IsEmpty ? null : inventory.database.GetItem(s.itemId);
             slotUIs[i].Set(data);
-            //slotUIs[i].Set(data, s.quantity);
         }
+        RefreshSelection();
+    }
+
+    private void RefreshSelection()
+    {
+        for (int i = 0; i < slotUIs.Count; i++)
+            slotUIs[i].SetSelected(i == inventory.selectedSlot);
     }
 }

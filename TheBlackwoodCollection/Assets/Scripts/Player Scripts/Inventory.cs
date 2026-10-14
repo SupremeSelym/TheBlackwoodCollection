@@ -18,14 +18,34 @@ public class Inventory : NetworkBehaviour
     public int slotCount = 20;
     public InventorySlot[] slots;
 
-    // UI listens to this
+    // Selection is local to the owning player (the server doesn't track it)
+    public int selectedSlot = 0;
+
     public event Action OnChanged;
+    public event Action OnSelectionChanged;
 
     private void Awake()
     {
         slots = new InventorySlot[slotCount];
         for (int i = 0; i < slots.Length; i++)
             slots[i] = InventorySlot.Empty;
+    }
+
+    // ---------- SELECTION (local) ----------
+
+    public void SelectSlot(int index)
+    {
+        if (index < 0 || index >= slots.Length) return;
+        if (index == selectedSlot) return;
+
+        selectedSlot = index;
+        OnSelectionChanged?.Invoke();
+    }
+
+    public InventorySlot GetSelectedSlot()
+    {
+        if (selectedSlot < 0 || selectedSlot >= slots.Length) return InventorySlot.Empty;
+        return slots[selectedSlot];
     }
 
     // ---------- SERVER-ONLY CHANGES ----------
@@ -42,7 +62,6 @@ public class Inventory : NetworkBehaviour
         ItemData data = database.GetItem(itemId);
         if (data == null || amount <= 0) return amount;
 
-        // 1) Fill existing stacks first
         for (int i = 0; i < slots.Length && amount > 0; i++)
         {
             if (slots[i].IsEmpty || slots[i].itemId != itemId) continue;
@@ -54,7 +73,6 @@ public class Inventory : NetworkBehaviour
             amount -= toAdd;
         }
 
-        // 2) Then use empty slots
         for (int i = 0; i < slots.Length && amount > 0; i++)
         {
             if (!slots[i].IsEmpty) continue;
@@ -89,7 +107,7 @@ public class Inventory : NetworkBehaviour
         NotifyChanged();
     }
 
-    // ---------- READ-ONLY HELPERS (safe anywhere) ----------
+    // ---------- READ-ONLY HELPERS ----------
 
     public int CountItem(int itemId)
     {
@@ -112,8 +130,7 @@ public class Inventory : NetworkBehaviour
     {
         OnChanged?.Invoke();
 
-        // The host's own player already has the real data. A client-owned
-        // player needs a copy sent to its owner.
+        // The host's own player already has the real data
         if (!IsServer || IsOwner) return;
 
         int[] ids = new int[slots.Length];
@@ -134,7 +151,7 @@ public class Inventory : NetworkBehaviour
     [ClientRpc]
     private void SyncClientRpc(int[] ids, int[] qtys, ClientRpcParams rpcParams = default)
     {
-        if (IsServer) return; // the server already has the truth
+        if (IsServer) return;
 
         int count = Mathf.Min(slots.Length, ids.Length);
         for (int i = 0; i < count; i++)

@@ -7,8 +7,7 @@ public class ItemPickup : MonoBehaviour
     public ItemData item;
     public int quantity = 1;
 
-    /// SERVER ONLY. Called by PlayerInteract after it validates the request.
-    /// Returns true if at least some items were picked up.
+    /// SERVER ONLY. Called after PlayerInteract validates the request.
     public bool TryPickUp(Inventory inv)
     {
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer) return false;
@@ -25,12 +24,12 @@ public class ItemPickup : MonoBehaviour
         if (leftover <= 0)
         {
             NetworkObject netObj = GetComponent<NetworkObject>();
-            if (netObj.IsSpawned) netObj.Despawn(true); // removes it for everyone
+            if (netObj.IsSpawned) netObj.Despawn(true);
             else Destroy(gameObject);
         }
         else
         {
-            quantity = leftover; // inventory was full, remainder stays in the world
+            quantity = leftover;
         }
 
         return pickedSomething;
