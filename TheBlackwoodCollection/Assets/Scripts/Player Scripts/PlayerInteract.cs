@@ -36,6 +36,7 @@ public class PlayerInteract : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return;
+        if (JournalUI.IsOpen) return;
 
         Keyboard kb = Keyboard.current;
         if (kb == null) return;
