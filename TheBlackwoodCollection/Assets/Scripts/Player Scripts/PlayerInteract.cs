@@ -22,6 +22,11 @@ public class PlayerInteract : NetworkBehaviour
 
     private Inventory inventory;
 
+    [SerializeField] private float interactDistance = 3f;
+    [SerializeField] private LayerMask interactionLayers = ~0;
+    [SerializeField] private Camera playerCamera;
+
+
     private static readonly Key[] numberKeys =
     {
         Key.Digit1, Key.Digit2, Key.Digit3, Key.Digit4, Key.Digit5,
@@ -31,6 +36,7 @@ public class PlayerInteract : NetworkBehaviour
     private void Awake()
     {
         inventory = GetComponent<Inventory>();
+        playerCamera = GetComponentInChildren<Camera>();
     }
 
     private void Update()
@@ -45,6 +51,14 @@ public class PlayerInteract : NetworkBehaviour
 
         if (kb[pickupKey].wasPressedThisFrame) TryPickup();
         if (kb[dropKey].wasPressedThisFrame) DropServerRpc(inventory.selectedSlot);
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            Generator generator = FindLookedAtGenerator();
+
+            if (generator != null)
+                generator.RequestMaintenance();
+        }
+
     }
 
     private void HandleSelection(Keyboard kb)
@@ -151,4 +165,23 @@ public class PlayerInteract : NetworkBehaviour
 
         dropped.GetComponent<NetworkObject>().Spawn();
     }
+
+    private Generator FindLookedAtGenerator()
+    {
+        Ray ray = playerCamera.ViewportPointToRay(
+            new Vector3(0.5f, 0.5f, 0f)
+        );
+
+        if (!Physics.Raycast(
+            ray,
+            out RaycastHit hit,
+            interactDistance,
+            interactionLayers))
+        {
+            return null;
+        }
+
+        return hit.collider.GetComponentInParent<Generator>();
+    }
+
 }
