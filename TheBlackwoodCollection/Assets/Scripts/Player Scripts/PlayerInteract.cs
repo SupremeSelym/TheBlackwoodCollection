@@ -21,7 +21,7 @@ public class PlayerInteract : NetworkBehaviour
     public bool dropWholeStack = false;
 
     private Inventory inventory;
-
+    private Generator generator;
     [SerializeField] private float interactDistance = 3f;
     [SerializeField] private LayerMask interactionLayers = ~0;
     [SerializeField] private Camera playerCamera;
@@ -37,6 +37,7 @@ public class PlayerInteract : NetworkBehaviour
     {
         inventory = GetComponent<Inventory>();
         playerCamera = GetComponentInChildren<Camera>();
+        generator = GetComponent<Generator>();
     }
 
     private void Update()
@@ -53,10 +54,9 @@ public class PlayerInteract : NetworkBehaviour
         if (kb[dropKey].wasPressedThisFrame) DropServerRpc(inventory.selectedSlot);
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
-            Generator generator = FindLookedAtGenerator();
 
             if (generator != null)
-                generator.RequestMaintenance();
+                generator.RequestRefuel();
         }
 
     }
@@ -166,7 +166,7 @@ public class PlayerInteract : NetworkBehaviour
         dropped.GetComponent<NetworkObject>().Spawn();
     }
 
-    private Generator FindLookedAtGenerator()
+   /* private Generator FindLookedAtGenerator()
     {
         Ray ray = playerCamera.ViewportPointToRay(
             new Vector3(0.5f, 0.5f, 0f)
@@ -182,6 +182,6 @@ public class PlayerInteract : NetworkBehaviour
         }
 
         return hit.collider.GetComponentInParent<Generator>();
-    }
+    }*/
 
 }
