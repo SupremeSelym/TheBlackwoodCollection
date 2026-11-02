@@ -2,19 +2,18 @@ using UnityEngine;
 
 public class ArtifactBase : MonoBehaviour
 {
-    public string ArtifactName;
-    public string ArtifactDescription;
-    private bool Contained = true;
+    private bool Contained;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        Contained = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnFailContainment()
