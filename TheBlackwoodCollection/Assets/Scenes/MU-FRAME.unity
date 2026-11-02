@@ -3121,7 +3121,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6031251713705977152}
-  - component: {fileID: 6411049811316408315}
   m_Layer: 0
   m_Name: TESTING_ARTIFACT
   m_TagString: Untagged
@@ -3129,20 +3128,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6411049811316408315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6411049811316408314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11eec7bd5f80d8646a352a103e618faa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ArtifactBase
-  ArtifactName: 
-  ArtifactDescription: 
 --- !u!1 &7386147061824965803
 GameObject:
   m_ObjectHideFlags: 0

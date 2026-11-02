@@ -17,5 +17,4 @@ public class ArtifactData : ScriptableObject
     [Header("Interaction")]
     public float InteractRange = 3f;                        // Range that the artifact can be interacted from
     public float RecontainAmount = 40f;                     // Amount of containment restored by interaction
-
 }
