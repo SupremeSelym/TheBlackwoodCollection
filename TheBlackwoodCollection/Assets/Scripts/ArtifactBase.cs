@@ -1,4 +1,8 @@
 using UnityEngine;
+using Unity.Netcode;
+
+public enum ArtifactState { Contained, Agitated, Critical, Breached }
+
 
 public class ArtifactBase : MonoBehaviour
 {
