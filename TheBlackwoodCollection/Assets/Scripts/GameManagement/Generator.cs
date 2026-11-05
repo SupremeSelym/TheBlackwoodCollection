@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(NetworkObject))]
 public class Generator : NetworkBehaviour
@@ -9,11 +10,13 @@ public class Generator : NetworkBehaviour
     [SerializeField] private int startingStoredFuel = 0;
     [SerializeField] private float startingCondition = 100f;
     [SerializeField] private float conditionLossPerSecond = 0.1f;
-    [SerializeField] private float repairAmount = 40f;
     [SerializeField] private float interactionRange = 3f;
 
     [Header("Interaction Point")]
-    [SerializeField] private Transform interactionPoint;
+    [SerializeField] private GameObject interactionPrompt;
+    private InputAction GenInteract;
+
+    private bool playerInRange;
 
     public NetworkVariable<int> StoredFuel = new NetworkVariable<int>(
         0,
@@ -37,6 +40,8 @@ public class Generator : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        GenInteract = InputSystem.actions.FindAction("Interaction");
+
         if (!IsServer)
             return;
 
@@ -52,6 +57,8 @@ public class Generator : NetworkBehaviour
 
     private void Update()
     {
+        HandleInteraction();
+
         if (!IsServer)
             return;
 
@@ -89,10 +96,10 @@ public class Generator : NetworkBehaviour
         RefuelServerRpc();
     }
 
-    public void RequestMaintenance()
+    /*public void RequestMaintenance()
     {
         MaintainServerRpc();
-    }
+    }*/
 
     [Rpc(SendTo.Server, RequireOwnership = false)]
     private void RefuelServerRpc(
@@ -101,9 +108,9 @@ public class Generator : NetworkBehaviour
         if (!IsServer || Condition.Value <= 0f)
             return;
 
-        if (!IsPlayerInRange(
+        /*if (!IsPlayerInRange(
             rpcParams.Receive.SenderClientId))
-            return;
+            return;*/
 
         /*if (!TryGetPlayerInventory(
             rpcParams.Receive.SenderClientId,
@@ -113,11 +120,18 @@ public class Generator : NetworkBehaviour
         if (!inventory.TryUseFuel())
             return;*/
 
+        bool wasEmpty = StoredFuel.Value <= 0;
+
         StoredFuel.Value++;
+
+        if (wasEmpty)
+        {
+            fuelTimer = Mathf.Max(0.1f, secondsPerFuelUnit);
+        }
         UpdateProductionState();
     }
 
-    [Rpc(SendTo.Server, RequireOwnership = false)]
+    /*[Rpc(SendTo.Server, RequireOwnership = false)]
     private void MaintainServerRpc(
         RpcParams rpcParams = default)
     {
@@ -128,13 +142,13 @@ public class Generator : NetworkBehaviour
             rpcParams.Receive.SenderClientId))
             return;
 
-        /*if (!TryGetPlayerInventory(
+        *//*if (!TryGetPlayerInventory(
             rpcParams.Receive.SenderClientId,
             out PlayerInventory inventory))
             return;
 
         if (!inventory.TryUseRepairKit())
-            return;*/
+            return;*//*
 
         Condition.Value = Mathf.Min(
             100f,
@@ -142,9 +156,9 @@ public class Generator : NetworkBehaviour
         );
 
         UpdateProductionState();
-    }
+    }*/
 
-    private bool IsPlayerInRange(ulong clientId)
+    /*private bool IsPlayerInRange(ulong clientId)
     {
         if (!NetworkManager.ConnectedClients.TryGetValue(
             clientId, out var client))
@@ -161,26 +175,53 @@ public class Generator : NetworkBehaviour
             client.PlayerObject.transform.position;
 
         return Vector3.Distance(playerPosition, point)
-            <= interactionRange;
+            <= interactionRange
+    }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+            return;
+
+        NetworkObject player =
+            other.GetComponentInParent<NetworkObject>();
+
+        if (player == null || !player.IsOwner)
+            return;
+
+        playerInRange = true;
+
+        if (interactionPrompt != null)
+            interactionPrompt.SetActive(true);
     }
 
-  /*  private bool TryGetPlayerInventory(
-        ulong clientId,
-        out PlayerInventory inventory)
+    private void OnTriggerExit(Collider other)
     {
-        inventory = null;
+        if (!other.CompareTag("Player"))
+            return;
 
-        if (!NetworkManager.ConnectedClients.TryGetValue(
-            clientId, out var client))
-            return false;
+        NetworkObject player =
+            other.GetComponentInParent<NetworkObject>();
 
-        if (client.PlayerObject == null)
-            return false;
+        if (player == null || !player.IsOwner)
+            return;
 
-        inventory = client.PlayerObject
-            .GetComponent<PlayerInventory>();
+        playerInRange = false;
 
-        return inventory != null && inventory.IsSpawned;
-    }*/
+        if (interactionPrompt != null)
+            interactionPrompt.SetActive(false);
+
+    }
+
+    private void HandleInteraction()
+    {
+        if (!IsOwner) return;
+        if (!playerInRange)
+            return;
+
+        if (GenInteract.WasPressedThisFrame())
+        {
+            RequestRefuel();
+        }
+    }
 }
-

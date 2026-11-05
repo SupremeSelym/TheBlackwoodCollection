@@ -52,12 +52,12 @@ public class PlayerInteract : NetworkBehaviour
 
         if (kb[pickupKey].wasPressedThisFrame) TryPickup();
         if (kb[dropKey].wasPressedThisFrame) DropServerRpc(inventory.selectedSlot);
-        if (Keyboard.current.rKey.wasPressedThisFrame)
+        /*if (Keyboard.current.rKey.wasPressedThisFrame)
         {
 
             if (generator != null)
                 generator.RequestRefuel();
-        }
+        }*/
 
     }
 
@@ -165,23 +165,5 @@ public class PlayerInteract : NetworkBehaviour
 
         dropped.GetComponent<NetworkObject>().Spawn();
     }
-
-   /* private Generator FindLookedAtGenerator()
-    {
-        Ray ray = playerCamera.ViewportPointToRay(
-            new Vector3(0.5f, 0.5f, 0f)
-        );
-
-        if (!Physics.Raycast(
-            ray,
-            out RaycastHit hit,
-            interactDistance,
-            interactionLayers))
-        {
-            return null;
-        }
-
-        return hit.collider.GetComponentInParent<Generator>();
-    }*/
 
 }
