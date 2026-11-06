@@ -5,8 +5,8 @@
     "\\TheBlackwoodCollection",
     "\\TheBlackwoodCollection\\Assets",
     "\\TheBlackwoodCollection\\Assets\\Scripts",
-    "\\TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts"
+    "\\TheBlackwoodCollection\\Assets\\Scripts\\Clock Scripts"
   ],
-  "SelectedNode": "\\TheBlackwoodCollection\\Assets\\Scripts\\Player Scripts\\PlayerMovement.cs",
+  "SelectedNode": "\\TheBlackwoodCollection\\Assets\\Scripts\\Clock Scripts\\Clock.cs",
   "PreviewInSolutionExplorer": false
 }
