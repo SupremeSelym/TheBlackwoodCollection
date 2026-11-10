@@ -61,7 +61,6 @@ public abstract class ArtifactBase : NetworkBehaviour
         if (State.Value == ArtifactState.Breached)
         {
             OnBreachedTick(dt);
-            return;
         }
 
         Containment.Value = Mathf.Clamp(Containment.Value - GetDecayRate() * dt, 0f, data.MaxContainment);

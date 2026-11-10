@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampScene.unity
     guid: 49344ddbf289ae04dab1e142aaad46af
+  - enabled: 1
+    path: Assets/Scenes/Zoey-FRAME.unity
+    guid: 9d41692dfc8160247936cf42cdff9554
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 61944c8b91c2b314795aec6bab1db1a3, type: 3}
   m_UseUCBPForAssetBundles: 0
