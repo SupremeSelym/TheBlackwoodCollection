@@ -137,7 +137,7 @@ public abstract class ArtifactBase : NetworkBehaviour
 
         float n = Normalized;
         ArtifactState next =
-            n <= 0f ? ArtifactState.Breached :
+            n <= data.BreachThreshold ? ArtifactState.Breached :
             n <= data.CriticalThreshold ? ArtifactState.Critical :
             n <= data.AgitatedThreshold ? ArtifactState.Agitated :
                                           ArtifactState.Contained;
