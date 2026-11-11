@@ -27,7 +27,5 @@ public class StoneAppleArtifact : ArtifactBase
                     rb.AddForce(GravityMultiplier * Physics.gravity, ForceMode.Acceleration);
                 }
         }
-        
     }
-
 }
