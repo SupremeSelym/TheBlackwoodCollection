@@ -29,6 +29,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         if(!IsOwner) return;
         if(PauseMenu.GameIsPaused) return;
+        if (JournalUI.IsOpen) return;
 
         Vector2 moveVector = moveInput.ReadValue<Vector2>();
         HandleMovement(moveVector);

@@ -32,7 +32,8 @@ public class PlayerCam : NetworkBehaviour
         if (!IsOwner || mainCamera == null) return;
         if (PauseMenu.GameIsPaused) return; //mouse gets ignored when paused
         if (Mouse.current == null) return;
-            
+        if (JournalUI.IsOpen) return;
+
         Vector2 mouseDelta = Mouse.current.delta.ReadValue();
         HandleLooking(mouseDelta);
             

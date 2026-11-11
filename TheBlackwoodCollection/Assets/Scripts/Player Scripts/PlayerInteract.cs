@@ -21,6 +21,11 @@ public class PlayerInteract : NetworkBehaviour
     public bool dropWholeStack = false;
 
     private Inventory inventory;
+    private Generator generator;
+    [SerializeField] private float interactDistance = 3f;
+    [SerializeField] private LayerMask interactionLayers = ~0;
+    [SerializeField] private Camera playerCamera;
+
 
     private static readonly Key[] numberKeys =
     {
@@ -31,11 +36,14 @@ public class PlayerInteract : NetworkBehaviour
     private void Awake()
     {
         inventory = GetComponent<Inventory>();
+        playerCamera = GetComponentInChildren<Camera>();
+        generator = GetComponent<Generator>();
     }
 
     private void Update()
     {
         if (!IsOwner) return;
+        if (JournalUI.IsOpen) return;
 
         Keyboard kb = Keyboard.current;
         if (kb == null) return;
@@ -44,6 +52,13 @@ public class PlayerInteract : NetworkBehaviour
 
         if (kb[pickupKey].wasPressedThisFrame) TryPickup();
         if (kb[dropKey].wasPressedThisFrame) DropServerRpc(inventory.selectedSlot);
+        /*if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+
+            if (generator != null)
+                generator.RequestRefuel();
+        }*/
+
     }
 
     private void HandleSelection(Keyboard kb)
@@ -150,4 +165,5 @@ public class PlayerInteract : NetworkBehaviour
 
         dropped.GetComponent<NetworkObject>().Spawn();
     }
+
 }

@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Assets",
+    "\\TheBlackwoodCollection",
+    "\\TheBlackwoodCollection\\Assets",
+    "\\TheBlackwoodCollection\\Assets\\Scripts",
+    "\\TheBlackwoodCollection\\Assets\\Scripts\\Clock Scripts"
   ],
-  "SelectedNode": "\\C:\\Projects\\TheBlackwoodCollection",
+  "SelectedNode": "\\TheBlackwoodCollection\\Assets\\Scripts\\Clock Scripts\\Clock.cs",
   "PreviewInSolutionExplorer": false
 }
