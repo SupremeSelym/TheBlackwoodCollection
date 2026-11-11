@@ -109,6 +109,8 @@ GameObject:
   - component: {fileID: 6557134267257378367}
   - component: {fileID: 2801805530718756839}
   - component: {fileID: 4222181653816922522}
+  - component: {fileID: -339213911577959443}
+  - component: {fileID: 7138895360486596010}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -195,14 +197,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2254924549
+  GlobalObjectIdHash: 4127583411
   InScenePlacedSourceGlobalObjectIdHash: 917354123
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
-  m_InScenePlaced: 1
+  m_InScenePlaced: 0
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
@@ -352,6 +354,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Flashlight
   ShowTopMostFoldoutHeaderGroup: 1
   flashlight: {fileID: 3645248698452010068}
+--- !u!114 &-339213911577959443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793613898015452909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5897b97135edf2b478222caa6cb59989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Playervoicelink
+  ShowTopMostFoldoutHeaderGroup: 1
+  head: {fileID: 0}
+--- !u!114 &7138895360486596010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793613898015452909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee60cafcc48f51a4ab7a5346076c3e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RadioInventoryLink
+  ShowTopMostFoldoutHeaderGroup: 1
+  radioItem: {fileID: 11400000, guid: 26b62decc3e3cc843bcf5fa207ddd972, type: 2}
+  frequency: 1
+  onlyWhenSelected: 0
 --- !u!1 &4817294430080381334
 GameObject:
   m_ObjectHideFlags: 0
