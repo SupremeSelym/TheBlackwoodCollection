@@ -12,9 +12,9 @@ public class SecurityCamera : NetworkBehaviour
         
     }
 
-    private void OnActiveCamera(Material render_texture)
-    {
+    //private void OnActiveCamera(Material render_texture)
+    //{
         
-        own_camera.targetTexture = render_texture;
-    }
+    //    own_camera.targetTexture = render_texture;
+    //}
 }

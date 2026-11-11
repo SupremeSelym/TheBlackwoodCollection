@@ -13,12 +13,12 @@ public class MonitorStation : NetworkBehaviour
         
     }
 
-    public void SetCamera(new_index)
-    {
-        if (IsHost)
-        {
-            MonitorIndex = new_index;
+    //public void SetCamera(int new_index)
+    //{
+    //    if (IsHost)
+    //    {
+    //        MonitorIndex = new_index;
             
-        }
-    }
+    //    }
+    //}
 }
