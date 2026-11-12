@@ -8,16 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Menu Scene.unity
     guid: e5ac6a26f6fc5f74e8042245bd24d412
-  - enabled: 1
+  - enabled: 0
     path: Assets/NGO_Minimal_Setup/NGO_Setup.unity
     guid: e5ca1de1c1f9d4c4191a95766f9b207c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampScene.unity
     guid: 49344ddbf289ae04dab1e142aaad46af
   - enabled: 1
     path: Assets/Scenes/MU-FRAME.unity
     guid: 374cb97c5aaf1544798ef23734803d26
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/VoiceTesting.unity
     guid: 4934593c454a8954992bca925a654ec2
   m_configObjects:
