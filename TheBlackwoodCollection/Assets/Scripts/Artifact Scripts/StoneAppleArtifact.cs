@@ -5,15 +5,22 @@ public class StoneAppleArtifact : ArtifactBase
     [SerializeField] float GravityRadius = 5f;
     [SerializeField] float GravityMultiplier = -2f;
 
-    protected override void OnBreach()
+    protected override void OnBreached()
     {
         Debug.Log("Artifact has breached");
     }
 
     protected override float ProcessSoothe(CharacterController player, int ActionId)
     {
-        Debug.Log("Applying soothe");
-        return 1f;
+        if (ActionId == 1)
+        {
+            return 20f;
+        }
+        else if (ActionId == 2)
+        {
+            return 10f;
+        }
+        else return 0;
     }
 
     void FixedUpdate()

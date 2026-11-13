@@ -8,6 +8,8 @@ public static class ArtifactManager
     static readonly List<ArtifactBase> all_artifacts = new();
     public static IReadOnlyList<ArtifactBase> All_Artifacts => all_artifacts;   // Publicly viewable (but not modifiable) list of the artifacts
     public static event Action<ArtifactBase> ArtifactBreached;
+    public static event Action<ArtifactBase> ArtifactCritical;
+    public static event Action<ArtifactBase> ArtifactAgitated;
 
     // Add an artifact to the overall artifact list
     public static void Register(ArtifactBase art)
@@ -32,6 +34,18 @@ public static class ArtifactManager
     public static void NotifyBreached(ArtifactBase art)
     {
         ArtifactBreached?.Invoke(art);
+    }
+
+    // Invokes the ArtifactBreached event for a given artifact
+    public static void NotifyCritical(ArtifactBase art)
+    {
+        ArtifactCritical?.Invoke(art);
+    }
+
+    // Invokes the ArtifactBreached event for a given artifact
+    public static void NotifyAgitated(ArtifactBase art)
+    {
+        ArtifactAgitated?.Invoke(art);
     }
 
     // Applies the given effect method to all other artifacts; effect method should include
