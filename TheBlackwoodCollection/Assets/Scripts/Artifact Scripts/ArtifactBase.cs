@@ -1,7 +1,8 @@
-using UnityEngine;
-using Unity.Netcode;
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
+using UnityEngine;
+using TMPro;
 
 public enum ArtifactState { Contained, Agitated, Critical, Breached }
 
@@ -19,6 +20,11 @@ public abstract class ArtifactBase : NetworkBehaviour
 
     public NetworkVariable<float> Containment = new(100f);
     public NetworkVariable<ArtifactState> State = new(ArtifactState.Contained);
+
+    [SerializeField] bool DebugShowContainmentText = false;
+    [SerializeField] protected GameObject DebugTextPrefab;
+    private GameObject DebugTextObject = null;
+    private TextMeshPro text_component = null;
 
     public ArtifactData Data => data;
     public float Normalized => Containment.Value / data.MaxContainment;
@@ -50,6 +56,22 @@ public abstract class ArtifactBase : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (DebugShowContainmentText)  // If debug, show current containment value over artifact itself
+        {
+            if (DebugTextObject == null && DebugTextPrefab != null)
+            {
+                DebugTextObject = Instantiate(DebugTextPrefab, transform);
+                DebugTextObject.transform.position += new Vector3(0, 1, 0);
+                text_component = DebugTextObject.GetComponent<TextMeshPro>();
+            }
+            if (!DebugTextObject.activeSelf) DebugTextObject.SetActive(true);
+            text_component.text = Convert.ToString(Math.Round(Containment.Value, 2));
+        }
+        else if (DebugTextObject != null && DebugTextObject.activeSelf)
+        {
+            DebugTextObject.SetActive(false);
+        }
+
         if (!IsServer) return;
         ServerTick(Time.deltaTime);
     }
