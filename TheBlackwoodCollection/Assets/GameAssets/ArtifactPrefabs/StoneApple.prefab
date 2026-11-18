@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 501001294
+  GlobalObjectIdHash: 2277172388
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -175,7 +175,10 @@ MonoBehaviour:
       MinSecondsBetweenUpdates: 0
       MaxSecondsBetweenUpdates: 0
     m_InternalValue: 0
+  DebugShowContainmentText: 0
+  DebugTextPrefab: {fileID: 1507768099902417907, guid: 68dd2c62d4915844386e689570ed4635, type: 3}
   GravityRadius: 5
+  GravityMultiplier: -2
 --- !u!1 &6188709822733432533
 GameObject:
   m_ObjectHideFlags: 0

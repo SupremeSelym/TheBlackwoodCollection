@@ -60,7 +60,7 @@ public class LobbyScreen : MonoBehaviour
     {
         foreach (var p in session.Players)
             if (GetProp(p, ReadyKey, "0") != "1") return false;
-        return session.Players.Count > 1;   // remove this if you want to allow solo starts
+        return session.Players.Count > 0;   
     }
 
     async Task ToggleReady()

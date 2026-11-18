@@ -8,13 +8,20 @@ public class ArtifactData : ScriptableObject
     public Sprite Icon;
 
     [Header("Containment")]
-    public float MaxContainment = 100f;                     // How "soothed" the artifact can be
-    public float BaseDecayPerSecond = 1.5f;                 // Amount that the containment decays per second
-    [Range(0f, 1f)] public float AgitatedThreshold = 0.6f;  // Percent threshold when artifact becomes agitated
-    [Range(0f, 1f)] public float CriticalThreshold = 0.3f;  // Percent threshold when artifact reaches critical agitation
-    [Range(0f, 1f)] public float BreachThreshold = 0.1f;    // Percent threshold when artifact breaches containment
+    [Tooltip("How \"soothed\" the artifact can be. Normal decay is 1 per second.")]
+    public float MaxContainment = 100f;
+    [Tooltip("Amount that the containment decays per second (1 = 1 unit containment per second).")]
+    public float BaseDecayPerSecond = 1.5f;
+    [Tooltip("Percent threshold when artifact becomes agitated (0.6 = 60% of MaxContainment).")]
+    [Range(0f, 1f)] public float AgitatedThreshold = 0.6f;
+    [Tooltip("Percent threshold when artifact reaches critical agitation.")]
+    [Range(0f, 1f)] public float CriticalThreshold = 0.3f;
+    [Tooltip("Percent threshold when artifact breaches containment.")]
+    [Range(0f, 1f)] public float BreachThreshold = 0.1f;
 
     [Header("Interaction")]
-    public float InteractRange = 3f;                        // Range that the artifact can be interacted from
-    public float RecontainAmount = 40f;                     // Amount of containment restored by interaction
+    [Tooltip("Range that the artifact can be interacted from in standard units.")]
+    public float InteractRange = 3f;
+    [Tooltip("Amount of containment restored by interaction (temp var until unique containment methods established)")]
+    public float RecontainAmount = 40f;
 }

@@ -1,7 +1,8 @@
-using UnityEngine;
-using Unity.Netcode;
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
+using UnityEngine;
+using TMPro;
 
 public enum ArtifactState { Contained, Agitated, Critical, Breached }
 
@@ -19,6 +20,11 @@ public abstract class ArtifactBase : NetworkBehaviour
 
     public NetworkVariable<float> Containment = new(100f);
     public NetworkVariable<ArtifactState> State = new(ArtifactState.Contained);
+
+    [SerializeField] bool DebugShowContainmentText = false;
+    [SerializeField] protected GameObject DebugTextPrefab;
+    private GameObject DebugTextObject = null;
+    private TextMeshPro text_component = null;
 
     public ArtifactData Data => data;
     public float Normalized => Containment.Value / data.MaxContainment;
@@ -50,6 +56,22 @@ public abstract class ArtifactBase : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (DebugShowContainmentText)  // If debug, show current containment value over artifact itself
+        {
+            if (DebugTextObject == null && DebugTextPrefab != null)
+            {
+                DebugTextObject = Instantiate(DebugTextPrefab, transform);
+                DebugTextObject.transform.position += new Vector3(0, 1, 0);
+                text_component = DebugTextObject.GetComponent<TextMeshPro>();
+            }
+            if (!DebugTextObject.activeSelf) DebugTextObject.SetActive(true);
+            text_component.text = Convert.ToString(Math.Round(Containment.Value, 2));
+        }
+        else if (DebugTextObject != null && DebugTextObject.activeSelf)
+        {
+            DebugTextObject.SetActive(false);
+        }
+
         if (!IsServer) return;
         ServerTick(Time.deltaTime);
     }
@@ -58,7 +80,19 @@ public abstract class ArtifactBase : NetworkBehaviour
     {
         PruneModifiers();
 
-        if (State.Value == ArtifactState.Breached)
+        if (State.Value == ArtifactState.Contained)
+        {
+            OnContainedTick(dt);
+        }
+        else if (State.Value == ArtifactState.Agitated)
+        {
+            OnAgitatedTick(dt);
+        }
+        else if (State.Value == ArtifactState.Critical)
+        {
+            OnCriticalTick(dt);
+        }
+        else if (State.Value == ArtifactState.Breached)
         {
             OnBreachedTick(dt);
         }
@@ -70,7 +104,6 @@ public abstract class ArtifactBase : NetworkBehaviour
     }
 
     // ------- Decay and modifiers -------
-    // Override to add artifact-specific conditions
     protected virtual float GetDecayRate()
     {
         float rate = data.BaseDecayPerSecond;
@@ -136,7 +169,7 @@ public abstract class ArtifactBase : NetworkBehaviour
 
         float n = Normalized;
         ArtifactState next =
-            n <= data.BreachThreshold ? ArtifactState.Breached :
+            n <= data.BreachThreshold   ? ArtifactState.Breached :
             n <= data.CriticalThreshold ? ArtifactState.Critical :
             n <= data.AgitatedThreshold ? ArtifactState.Agitated :
                                           ArtifactState.Contained;
@@ -145,12 +178,27 @@ public abstract class ArtifactBase : NetworkBehaviour
 
         State.Value = next;
         if (next == ArtifactState.Breached) Breach();
+        else if (next == ArtifactState.Critical) Critical();
+        else if (next == ArtifactState.Agitated) Agitated();
     }
 
+    // Notifying event objects
     void Breach()
     {
-        OnBreach();
+        OnBreached();
         ArtifactManager.NotifyBreached(this);
+    }
+
+    void Critical()
+    {
+        OnCritical();
+        ArtifactManager.NotifyCritical(this);
+    }
+
+    void Agitated()
+    {
+        OnAgitated();
+        ArtifactManager.NotifyAgitated(this);
     }
 
     public void Recontain()
@@ -168,10 +216,15 @@ public abstract class ArtifactBase : NetworkBehaviour
     }
 
 
-    // ------- Virtual methods to be overridden by subclasses -------
+    // ------- Virtual methods to be overridden by new artifacts -------
     protected virtual void OnServerSpawn() { }              // What to do when the server (host) spawns
     protected virtual void OnServerTick(float dt) { }       // Updates to artifacts based on server ticks
-    protected virtual void OnBreach() { }                   // Immediate effect when artifact breaches containment
+    protected virtual void OnContainedTick(float dt) { }    // Ongoing effects while the artifact is contained
+    protected virtual void OnAgitated() { }                 // Immediate effect when artifact becomes agitated
+    protected virtual void OnAgitatedTick(float dt) { }     // Ongoing effects while the artifact is agitated
+    protected virtual void OnCritical() { }                 // Immediate effect when artifact becomes critical
+    protected virtual void OnCriticalTick(float dt) { }     // Ongoing effects while the artifact is critical
+    protected virtual void OnBreached() { }                 // Immediate effect when artifact breaches containment
     protected virtual void OnBreachedTick(float dt) { }     // Ongoing effects while the artifact is uncontained
     protected virtual void OnRestoreContainment() { }       // Effect when containment of artifact is restored
     // Method for individual clients to have VFX, SFX, or other per client effects trigger when an artifact's state changes
