@@ -10,13 +10,13 @@ public class MainMenuManager : MonoBehaviour
     public void HostGame()
     {
         StartAsHost = true;
-        SceneManager.LoadScene("MU-FRAME");
+        SceneManager.LoadScene("Lobby");
     }
 
     public void JoinGame()
     {
         StartAsHost = false;
-        SceneManager.LoadScene("MU-FRAME");
+        SceneManager.LoadScene("Lobby");
     }
 
     public void LoadScene(string sceneName)
