@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 public class Generator : NetworkBehaviour
 {
     [Header("Generator Settings")]
-    [SerializeField] private float secondsPerFuelUnit = 30f;
-    [SerializeField] private int startingStoredFuel = 0;
+    [SerializeField] private float secondsPerFuelUnit = 100f;
+    [SerializeField] private int startingStoredFuel = 1;
     [SerializeField] private float startingCondition = 100f;
     [SerializeField] private float conditionLossPerSecond = 0.1f;
     [SerializeField] private float interactionRange = 3f;
